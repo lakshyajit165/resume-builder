@@ -21,8 +21,7 @@ import { ResumeFormComponent } from './components/resume-form/resume-form.compon
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule,
-    MatStepperModule
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

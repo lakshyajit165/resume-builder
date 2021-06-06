@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BreakpointObserver} from '@angular/cdk/layout';
+import {StepperOrientation} from '@angular/material/stepper';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
@@ -14,6 +15,7 @@ export class ResumeFormComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   isEditable = true;
+  stepperOrientation: Observable<StepperOrientation>;
 
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
@@ -27,7 +29,8 @@ export class ResumeFormComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder, 
     breakpointObserver: BreakpointObserver) {
-    
+      this.stepperOrientation = breakpointObserver.observe('(min-width: 800px)')
+      .pipe(map(({matches}) => matches ? 'horizontal' : 'vertical'));
   }
   
 

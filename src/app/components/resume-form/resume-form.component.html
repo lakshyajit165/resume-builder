@@ -1,5 +1,5 @@
 <div class="container">
-    <mat-horizontal-stepper linear #stepper>
+    <mat-stepper linear #stepper [orientation]="(stepperOrientation | async)!">
         <mat-step [stepControl]="firstFormGroup" [editable]="isEditable">
         <form [formGroup]="firstFormGroup">
             <ng-template matStepLabel>Fill out your name</ng-template>
@@ -34,5 +34,5 @@
             <button mat-button (click)="stepper.reset()">Reset</button>
         </div>
         </mat-step> 
-    </mat-horizontal-stepper>
+    </mat-stepper>
 </div>

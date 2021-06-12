@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {StepperOrientation} from '@angular/material/stepper';
 import {Observable} from 'rxjs';
@@ -21,17 +21,20 @@ export class ResumeFormComponent implements OnInit {
   @ViewChild("chipList") chipList;
 
   ngOnInit() {
-    this.formGroup = this._formBuilder.group({
-      formArray: this._formBuilder.array([
+    this.resumeFormGroup = this._formBuilder.group({
+      formArray: 
+        this._formBuilder.array([
         this._formBuilder.group({
           name: ['', Validators.required],
           email: ['', [Validators.required, Validators.email]],
           github: ['', Validators.required],
           linkedin: ['', Validators.required],
           mobile: ['', Validators.required],
-          skills: [this.skillNames, this.validateSkillsArray]
+          skills: [this.skillNames]
         }),
-        this._formBuilder.group
+        this._formBuilder.group({
+          education: this._formBuilder.array([this.createEducationFormGroup()])
+        })
       ])
     });
   }
@@ -43,7 +46,7 @@ export class ResumeFormComponent implements OnInit {
       .pipe(map(({matches}) => matches ? 'horizontal' : 'vertical'));
   }
 
-  formGroup: FormGroup;
+  resumeFormGroup: FormGroup;
   isEditable = true;
   stepperOrientation: Observable<StepperOrientation>;
   skillNames: Skill[] = [];
@@ -55,7 +58,7 @@ export class ResumeFormComponent implements OnInit {
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
   get formArray(): AbstractControl | null {
-    return this.formGroup.get('formArray');
+    return this.resumeFormGroup.get('formArray');
   }
 
 
@@ -73,8 +76,8 @@ export class ResumeFormComponent implements OnInit {
     event.chipInput!.clear();
   }
 
-  remove(fruit: Skill): void {
-    const index = this.skillNames.indexOf(fruit);
+  remove(skillValue: Skill): void {
+    const index = this.skillNames.indexOf(skillValue);
     if (index >= 0) {
       this.skillNames.splice(index, 1);
     }
@@ -84,14 +87,25 @@ export class ResumeFormComponent implements OnInit {
     }
   }
 
-  validateSkillsArray(c: FormControl){
-    if (c.value && c.value.length > 0) {
-      return {
-        validateArrayNotEmpty: { valid: false }
-      };
-    }
-    return null;
+  createEducationFormGroup(): FormGroup {
+    return new FormGroup({
+      'college_or_uni': new FormControl('', Validators.required),
+      'degree': new FormControl('', Validators.required),
+      'from': new FormControl('', Validators.required),
+      'to': new FormControl('', Validators.required),
+      'marks_perc_gpa': new FormControl('', Validators.required)
+    })
+  }
+  
+  addEducationFormGroup() {
+    const educationGrp = this.resumeFormGroup.controls.formArray.get('1') as FormGroup;
+    const education = educationGrp.controls.education as FormArray;
+    console.log(educationGrp.controls.education);
+    education.push(this.createEducationFormGroup());
   }
 
+  stepClick(e){
+    console.log(e);
+  }
 
 }

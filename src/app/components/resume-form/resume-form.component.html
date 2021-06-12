@@ -1,8 +1,8 @@
 <div class="container mx-auto">
-    <form [formGroup]="formGroup">
-        <mat-stepper linear #stepper formArrayName="formArray" [orientation]="(stepperOrientation | async)!">
+    <form [formGroup]="resumeFormGroup">
+        <mat-stepper [linear]="false" #stepper formArrayName="formArray" [orientation]="(stepperOrientation | async)!">
             <mat-step formGroupName="0" [stepControl]="formArray?.get([0])" [editable]="isEditable">
-                <div class="step-zero-wrapper">
+                <div class="step-zero-wrapper mt-4">
                     <ng-template matStepLabel>Personal Details</ng-template>
                     <div class="row">
                         <div class="col-lg-4">
@@ -69,7 +69,66 @@
                     </div>
                    
                     <div>
-                    <button mat-button matStepperNext>Next</button>
+                    <button mat-raised-button color="primary" matStepperNext type="button">Next</button>
+                    </div>
+                </div>
+            </mat-step>
+            <mat-step formGroupName="1" [stepControl]="formArray?.get([1])" [editable]="isEditable">
+                <div class="step-one-wrapper mt-4">
+                    <ng-template matStepLabel>Education</ng-template>
+                    <div formArrayName="education">
+                       <div  *ngFor="let edu of formArray?.get([1]).controls.education.controls let i = index">
+                           <div [formGroupName]="i">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>School/College/University</mat-label>
+                                            <input matInput formControlName="college_or_uni" placeholder="School/College/University" required>
+                                            <mat-error>College name is required</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Degree</mat-label>
+                                            <input matInput formControlName="degree" placeholder="Degree" required>
+                                            <mat-error>Degree is required</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Marks/Percentage/GPA</mat-label>
+                                            <input matInput formControlName="marks_perc_gpa" placeholder="Marks/Percentage/GPA" required>
+                                            <mat-error>Marks details are required</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>From</mat-label>
+                                            <input matInput formControlName="from" [matDatepicker]="picker1">
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker>
+                                            <mat-error>From date is required</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>To</mat-label>
+                                            <input matInput formControlName="to" [matDatepicker]="picker2">
+                                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker2></mat-datepicker>
+                                            <mat-error>To date is required</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="example-button-container">
+                                <button mat-fab color="secondary" type="button" (click)="addEducationFormGroup()" aria-label="Example icon button with a home icon">
+                                  <mat-icon>add</mat-icon>
+                                </button>
+                             </div>
+                        </div>
                     </div>
                 </div>
             </mat-step>

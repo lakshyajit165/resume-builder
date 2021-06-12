@@ -1,3 +1,10 @@
 mat-form-field {
     width: 100%;
 }
+.form-add {
+    margin-right: 5px;
+}
+
+.form-remove {
+    margin-left: 5px;
+}

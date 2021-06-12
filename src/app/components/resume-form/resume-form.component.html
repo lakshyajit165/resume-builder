@@ -78,7 +78,7 @@
                     <ng-template matStepLabel>Education</ng-template>
                     <div formArrayName="education">
                        <div  *ngFor="let edu of formArray?.get([1]).controls.education.controls let i = index">
-                           <div [formGroupName]="i">
+                           <div [formGroupName]="i" class="mb-4">
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <mat-form-field appearance="outline">
@@ -102,7 +102,7 @@
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row mb-4">
                                     <div class="col-lg-4">
                                         <mat-form-field appearance="outline">
                                             <mat-label>From</mat-label>
@@ -121,13 +121,20 @@
                                             <mat-error>To date is required</mat-error>
                                         </mat-form-field>
                                     </div>
+                                    <div class="col-lg-4">
+                                        <div class="example-button-container">
+                                            <button mat-fab color="primary" class="form-add" type="button" (click)="addEducationFormGroup()" aria-label="Example icon button with a home icon">
+                                              <mat-icon>add</mat-icon>
+                                            </button>
+                                            <button *ngIf="i !== 0" mat-fab color="warn" class="form-remove" type="button" (click)="deleteEducationFormGroup(i)" aria-label="Example icon button with a home icon">
+                                                <mat-icon>remove</mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
+                                <mat-divider></mat-divider>
                             </div>
-                            <div class="example-button-container">
-                                <button mat-fab color="secondary" type="button" (click)="addEducationFormGroup()" aria-label="Example icon button with a home icon">
-                                  <mat-icon>add</mat-icon>
-                                </button>
-                             </div>
+                            
                         </div>
                     </div>
                 </div>

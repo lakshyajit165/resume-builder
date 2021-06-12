@@ -100,8 +100,17 @@ export class ResumeFormComponent implements OnInit {
   addEducationFormGroup() {
     const educationGrp = this.resumeFormGroup.controls.formArray.get('1') as FormGroup;
     const education = educationGrp.controls.education as FormArray;
-    console.log(educationGrp.controls.education);
     education.push(this.createEducationFormGroup());
+  }
+
+  deleteEducationFormGroup(index: number) {
+    const educationGrp = this.resumeFormGroup.controls.formArray.get('1') as FormGroup;
+    const education = educationGrp.controls.education as FormArray;
+    if (education.length > 1) {
+      education.removeAt(index)
+    } else {
+      education.reset()
+    }
   }
 
   stepClick(e){

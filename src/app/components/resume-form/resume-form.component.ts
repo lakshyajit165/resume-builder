@@ -34,6 +34,9 @@ export class ResumeFormComponent implements OnInit {
         }),
         this._formBuilder.group({
           education: this._formBuilder.array([this.createEducationFormGroup()])
+        }),
+        this._formBuilder.group({
+          experience: this._formBuilder.array([this.createExperienceFormGroup()])
         })
       ])
     });
@@ -86,7 +89,7 @@ export class ResumeFormComponent implements OnInit {
       this.chipList.errorState = true;
     }
   }
-
+  // education section functionalities
   createEducationFormGroup(): FormGroup {
     return new FormGroup({
       'college_or_uni': new FormControl('', Validators.required),
@@ -112,6 +115,34 @@ export class ResumeFormComponent implements OnInit {
       education.reset()
     }
   }
+
+  // experience section functionalities
+  createExperienceFormGroup(): FormGroup {
+    return new FormGroup({
+      'organization': new FormControl('', Validators.required),
+      'position': new FormControl('', Validators.required),
+      'from': new FormControl('', Validators.required),
+      'to': new FormControl('', Validators.required),
+      'description': new FormControl('', Validators.required)
+    })
+  }
+  
+  addExperienceFormGroup() {
+    const experienceGrp = this.resumeFormGroup.controls.formArray.get('2') as FormGroup;
+    const experience = experienceGrp.controls.experience as FormArray;
+    experience.push(this.createExperienceFormGroup());
+  }
+
+  deleteExperienceFormGroup(index: number) {
+    const experienceGrp = this.resumeFormGroup.controls.formArray.get('2') as FormGroup;
+    const experience = experienceGrp.controls.experience as FormArray;
+    if (experience.length > 1) {
+      experience.removeAt(index)
+    } else {
+      experience.reset()
+    }
+  }
+
 
   stepClick(e){
     console.log(e);

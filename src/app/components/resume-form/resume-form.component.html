@@ -1,6 +1,12 @@
 <div class="container mx-auto">
+    <div class="row">
+        <h1 class="mat-headline page-title">Let's create your resume!</h1>
+    </div>
     <form [formGroup]="resumeFormGroup">
+        
         <mat-stepper [linear]="false" #stepper formArrayName="formArray" [orientation]="(stepperOrientation | async)!">
+
+            <!-- Personal Details -->
             <mat-step formGroupName="0" [stepControl]="formArray?.get([0])" [editable]="isEditable">
                 <div class="step-zero-wrapper mt-4">
                     <ng-template matStepLabel>Personal Details</ng-template>
@@ -69,10 +75,12 @@
                     </div>
                    
                     <div>
-                    <button mat-raised-button color="primary" matStepperNext type="button">Next</button>
+                    <button mat-raised-button color="primary" matStepperNext type="button" class="stepperNextBtn">Next</button>
                     </div>
                 </div>
             </mat-step>
+
+            <!-- Education details -->
             <mat-step formGroupName="1" [stepControl]="formArray?.get([1])" [editable]="isEditable">
                 <div class="step-one-wrapper mt-4">
                     <ng-template matStepLabel>Education</ng-template>
@@ -126,7 +134,7 @@
                                             <button mat-fab color="primary" class="form-add" type="button" (click)="addEducationFormGroup()" aria-label="Example icon button with a home icon">
                                               <mat-icon>add</mat-icon>
                                             </button>
-                                            <button *ngIf="i !== 0" mat-fab color="warn" class="form-remove" type="button" (click)="deleteEducationFormGroup(i)" aria-label="Example icon button with a home icon">
+                                            <button *ngIf="i !== 0" mat-fab class="form-remove" color="secondary" type="button" (click)="deleteEducationFormGroup(i)" aria-label="Example icon button with a home icon">
                                                 <mat-icon>remove</mat-icon>
                                             </button>
                                         </div>
@@ -136,6 +144,82 @@
                             </div>
                             
                         </div>
+                    </div>
+                    <div>
+                        <button mat-raised-button matStepperPrevious type="button" class="stepperBackBtn">Back</button>
+                        <button mat-raised-button color="primary" matStepperNext type="button" class="stepperNextBtn">Next</button>
+                    </div>
+                </div>
+            </mat-step>
+
+            <!-- Experience Details -->
+            <mat-step formGroupName="2" [stepControl]="formArray?.get([2])" [editable]="isEditable">
+                <div class="step-one-wrapper mt-4">
+                    <ng-template matStepLabel>Experience</ng-template>
+                    <div formArrayName="experience">
+                       <div  *ngFor="let ex of formArray?.get([2]).controls.experience.controls let i = index">
+                           <div [formGroupName]="i" class="mb-4">
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Organization</mat-label>
+                                            <input matInput formControlName="organization" placeholder="Organization" required>
+                                            <mat-error>Organization name is required</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Position</mat-label>
+                                            <input matInput formControlName="position" placeholder="Position" required>
+                                            <mat-error>Position is required</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>From</mat-label>
+                                            <input matInput formControlName="from" [matDatepicker]="picker1">
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker>
+                                            <mat-error>From date is required</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>To</mat-label>
+                                            <input matInput formControlName="to" [matDatepicker]="picker2">
+                                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker2></mat-datepicker>
+                                            <mat-error>To date is required</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-lg-8">
+                                        <mat-form-field class="example-full-width" appearance="outline">
+                                            <mat-label>Description</mat-label>
+                                            <textarea formControlName="description" rows="4" matInput placeholder="Describe your nature of work.."></textarea>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="example-button-container">
+                                            <button mat-fab color="primary" class="form-add" type="button" (click)="addExperienceFormGroup()" aria-label="Example icon button with a home icon">
+                                              <mat-icon>add</mat-icon>
+                                            </button>
+                                            <button *ngIf="i !== 0" mat-fab class="form-remove" color="secondary" type="button" (click)="deleteExperienceFormGroup(i)" aria-label="Example icon button with a home icon">
+                                                <mat-icon>remove</mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <mat-divider></mat-divider>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div>
+                        <button mat-raised-button matStepperPrevious type="button" class="stepperBackBtn">Back</button>
+                        <button mat-raised-button color="primary" matStepperNext type="button" class="stepperNextBtn">Next</button>
                     </div>
                 </div>
             </mat-step>

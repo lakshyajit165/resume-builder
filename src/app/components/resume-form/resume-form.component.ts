@@ -6,6 +6,12 @@ import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
+
 
 export interface Skill {
   name: string;
@@ -43,6 +49,7 @@ export class ResumeFormComponent implements OnInit {
   }
 
   constructor(
+    private _snackBar: MatSnackBar,
     private _formBuilder: FormBuilder, 
     breakpointObserver: BreakpointObserver) {
       this.stepperOrientation = breakpointObserver.observe('(min-width: 800px)')
@@ -59,6 +66,9 @@ export class ResumeFormComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+  
 
   get formArray(): AbstractControl | null {
     return this.resumeFormGroup.get('formArray');
@@ -103,7 +113,10 @@ export class ResumeFormComponent implements OnInit {
   addEducationFormGroup() {
     const educationGrp = this.resumeFormGroup.controls.formArray.get('1') as FormGroup;
     const education = educationGrp.controls.education as FormArray;
-    education.push(this.createEducationFormGroup());
+    if(education.length === 3)
+        this.openSnackBar("Can't add more than 3 education fields!");
+    else
+        education.push(this.createEducationFormGroup());
   }
 
   deleteEducationFormGroup(index: number) {
@@ -130,7 +143,11 @@ export class ResumeFormComponent implements OnInit {
   addExperienceFormGroup() {
     const experienceGrp = this.resumeFormGroup.controls.formArray.get('2') as FormGroup;
     const experience = experienceGrp.controls.experience as FormArray;
-    experience.push(this.createExperienceFormGroup());
+    console.log(this.resumeFormGroup.value);
+    if(experience.length === 5)
+        this.openSnackBar("Can't add more than 5 experiences!");
+    else
+        experience.push(this.createExperienceFormGroup());
   }
 
   deleteExperienceFormGroup(index: number) {
@@ -143,9 +160,11 @@ export class ResumeFormComponent implements OnInit {
     }
   }
 
-
-  stepClick(e){
-    console.log(e);
+  openSnackBar(msg: string) {
+    this._snackBar.open(msg, 'Close', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      duration: 2000
+    });
   }
-
 }

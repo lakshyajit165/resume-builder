@@ -233,7 +233,7 @@
 
             <!-- Project Details -->
             <mat-step formGroupName="3" [stepControl]="formArray?.get([3])" [editable]="isEditable">
-                <div class="step-two-wrapper mt-4">
+                <div class="step-three-wrapper mt-4">
                     <ng-template matStepLabel>Projects</ng-template>
                     <div formArrayName="projects">
                        <div  *ngFor="let pr of formArray?.get([3]).controls.projects.controls let i = index">
@@ -284,6 +284,45 @@
                     </div>
                 </div>
             </mat-step>
+
+            <!-- Hobby details -->
+            <mat-step formGroupName="4" [stepControl]="formArray?.get([4])" [editable]="isEditable">
+                <div class="step-four-wrapper mt-4">
+                    <ng-template matStepLabel>Hobbies / Achievements</ng-template>
+                    <div formArrayName="hobbies_and_achievements">
+                       <div  *ngFor="let pr of formArray?.get([4]).controls.hobbies_and_achievements.controls let i = index">
+                           <div [formGroupName]="i" class="mb-4">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Description</mat-label>
+                                            <input matInput formControlName="description" placeholder="Description" required>
+                                            <mat-error>Description is required</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="example-button-container">
+                                            <button mat-fab color="primary" class="form-add" type="button" (click)="addHobbiesAndAchievementsFormGroup()" aria-label="Add achievement">
+                                              <mat-icon>add</mat-icon>
+                                            </button>
+                                            <button *ngIf="i !== 0" mat-fab class="form-remove" color="secondary" type="button" (click)="deleteHobbiesAndAchievementsFormGroup(i)" aria-label="Remove achievement">
+                                                <mat-icon>remove</mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div>
+                        <button mat-raised-button matStepperPrevious type="button" class="stepperBackBtn">Back</button>
+                        <button mat-raised-button color="primary" matStepperNext type="button" class="stepperNextBtn">Next</button>
+                    </div>
+                </div>
+            </mat-step>
+
 
         </mat-stepper>
     </form>

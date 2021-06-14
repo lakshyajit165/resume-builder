@@ -30,23 +30,31 @@ export class ResumeFormComponent implements OnInit {
     this.resumeFormGroup = this._formBuilder.group({
       formArray: 
         this._formBuilder.array([
-        this._formBuilder.group({
-          name: ['', Validators.required],
-          email: ['', [Validators.required, Validators.email]],
-          github: ['', Validators.required],
-          linkedin: ['', Validators.required],
-          mobile: ['', Validators.required],
-          skills: [this.skillNames]
-        }),
-        this._formBuilder.group({
-          education: this._formBuilder.array([this.createEducationFormGroup()])
-        }),
-        this._formBuilder.group({
-          experience: this._formBuilder.array([this.createExperienceFormGroup()])
-        }),
-        this._formBuilder.group({
-          projects: this._formBuilder.array([this.createProjectFormGroup()])
-        })
+
+          this._formBuilder.group({
+            name: ['', Validators.required],
+            email: ['', [Validators.required, Validators.email]],
+            github: ['', Validators.required],
+            linkedin: ['', Validators.required],
+            mobile: ['', Validators.required],
+            skills: [this.skillNames]
+          }),
+
+          this._formBuilder.group({
+            education: this._formBuilder.array([this.createEducationFormGroup()])
+          }),
+
+          this._formBuilder.group({
+            experience: this._formBuilder.array([this.createExperienceFormGroup()])
+          }),
+
+          this._formBuilder.group({
+            projects: this._formBuilder.array([this.createProjectFormGroup()])
+          }),
+
+          this._formBuilder.group({
+            hobbies_and_achievements: this._formBuilder.array([this.createHobbiesAndAchievementsFormGroup()])
+          })
       ])
     });
   }
@@ -189,6 +197,32 @@ export class ResumeFormComponent implements OnInit {
       projects.removeAt(index)
     } else {
       projects.reset()
+    }
+  }
+
+  // hobbies and achievements
+  createHobbiesAndAchievementsFormGroup() {
+    return new FormGroup({
+      'description': new FormControl('', Validators.required)
+    })
+  }
+
+  addHobbiesAndAchievementsFormGroup() {
+    const hobbiesGrp = this.resumeFormGroup.controls.formArray.get('4') as FormGroup;
+    let hobbies = hobbiesGrp.controls.hobbies_and_achievements as FormArray;
+    if(hobbies.length === 6)
+        this.openSnackBar("Can't add more than 6 achievements!");
+    else
+        hobbies.push(this.createHobbiesAndAchievementsFormGroup());
+  }
+
+  deleteHobbiesAndAchievementsFormGroup(index: number) {
+    const hobbiesGrp = this.resumeFormGroup.controls.formArray.get('4') as FormGroup;
+    let hobbies = hobbiesGrp.controls.hobbies_and_achievements as FormArray;
+    if (hobbies.length > 1) {
+      hobbies.removeAt(index)
+    } else {
+      hobbies.reset()
     }
   }
 

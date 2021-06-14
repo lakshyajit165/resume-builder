@@ -160,7 +160,7 @@
 
             <!-- Experience Details -->
             <mat-step formGroupName="2" [stepControl]="formArray?.get([2])" [editable]="isEditable">
-                <div class="step-one-wrapper mt-4">
+                <div class="step-two-wrapper mt-4">
                     <ng-template matStepLabel>Experience</ng-template>
                     <div formArrayName="experience">
                        <div  *ngFor="let ex of formArray?.get([2]).controls.experience.controls let i = index">
@@ -204,6 +204,7 @@
                                         <mat-form-field class="example-full-width" appearance="outline">
                                             <mat-label>Description</mat-label>
                                             <textarea formControlName="description" rows="4" matInput placeholder="Describe your nature of work.."></textarea>
+                                            <mat-error>Description is required</mat-error>
                                         </mat-form-field>
                                     </div>
                                     <div class="col-lg-4">
@@ -229,6 +230,61 @@
                     </div>
                 </div>
             </mat-step>
+
+            <!-- Project Details -->
+            <mat-step formGroupName="3" [stepControl]="formArray?.get([3])" [editable]="isEditable">
+                <div class="step-two-wrapper mt-4">
+                    <ng-template matStepLabel>Projects</ng-template>
+                    <div formArrayName="projects">
+                       <div  *ngFor="let pr of formArray?.get([3]).controls.projects.controls let i = index">
+                           <div [formGroupName]="i" class="mb-4">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Title</mat-label>
+                                            <input matInput formControlName="title" placeholder="Project Title" required>
+                                            <mat-error>Project title is required</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Link</mat-label>
+                                            <input matInput formControlName="link" placeholder="Project link">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-lg-8">
+                                        <mat-form-field class="example-full-width" appearance="outline">
+                                            <mat-label>Description</mat-label>
+                                            <textarea formControlName="description" rows="4" matInput placeholder="Describe your project.."></textarea>
+                                            <mat-error>Project description is required</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="example-button-container">
+                                            <button mat-fab color="primary" class="form-add" type="button" (click)="addProjectFormGroup()" aria-label="Add project">
+                                              <mat-icon>add</mat-icon>
+                                            </button>
+                                            <button *ngIf="i !== 0" mat-fab class="form-remove" color="secondary" type="button" (click)="deleteProjectFormGroup(i)" aria-label="Remove project">
+                                                <mat-icon>remove</mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <mat-divider></mat-divider>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div>
+                        <button mat-raised-button matStepperPrevious type="button" class="stepperBackBtn">Back</button>
+                        <button mat-raised-button color="primary" matStepperNext type="button" class="stepperNextBtn">Next</button>
+                    </div>
+                </div>
+            </mat-step>
+
         </mat-stepper>
     </form>
 </div>

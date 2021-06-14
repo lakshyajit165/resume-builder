@@ -43,6 +43,9 @@ export class ResumeFormComponent implements OnInit {
         }),
         this._formBuilder.group({
           experience: this._formBuilder.array([this.createExperienceFormGroup()])
+        }),
+        this._formBuilder.group({
+          projects: this._formBuilder.array([this.createProjectFormGroup()])
         })
       ])
     });
@@ -113,7 +116,7 @@ export class ResumeFormComponent implements OnInit {
   
   addEducationFormGroup() {
     const educationGrp = this.resumeFormGroup.controls.formArray.get('1') as FormGroup;
-    const education = educationGrp.controls.education as FormArray;
+    let education = educationGrp.controls.education as FormArray;
     if(education.length === 3)
         this.openSnackBar("Can't add more than 3 education fields!");
     else
@@ -122,7 +125,7 @@ export class ResumeFormComponent implements OnInit {
 
   deleteEducationFormGroup(index: number) {
     const educationGrp = this.resumeFormGroup.controls.formArray.get('1') as FormGroup;
-    const education = educationGrp.controls.education as FormArray;
+    let education = educationGrp.controls.education as FormArray;
     if (education.length > 1) {
       education.removeAt(index)
     } else {
@@ -143,7 +146,7 @@ export class ResumeFormComponent implements OnInit {
   
   addExperienceFormGroup() {
     const experienceGrp = this.resumeFormGroup.controls.formArray.get('2') as FormGroup;
-    const experience = experienceGrp.controls.experience as FormArray;
+    let experience = experienceGrp.controls.experience as FormArray;
     console.log(this.resumeFormGroup.value);
     if(experience.length === 5)
         this.openSnackBar("Can't add more than 5 experiences!");
@@ -153,11 +156,39 @@ export class ResumeFormComponent implements OnInit {
 
   deleteExperienceFormGroup(index: number) {
     const experienceGrp = this.resumeFormGroup.controls.formArray.get('2') as FormGroup;
-    const experience = experienceGrp.controls.experience as FormArray;
+    let experience = experienceGrp.controls.experience as FormArray;
     if (experience.length > 1) {
       experience.removeAt(index)
     } else {
       experience.reset()
+    }
+  }
+
+  // project section functionalities
+  createProjectFormGroup(): FormGroup {
+    return new FormGroup({
+      'title': new FormControl('', Validators.required),
+      'link': new FormControl(''),
+      'description': new FormControl('', Validators.required)
+    })
+  }
+
+  addProjectFormGroup() {
+    const projectGrp = this.resumeFormGroup.controls.formArray.get('3') as FormGroup;
+    let projects = projectGrp.controls.projects as FormArray;
+    if(projects.length === 5)
+        this.openSnackBar("Can't add more than 5 projects!");
+    else
+        projects.push(this.createProjectFormGroup());
+  }
+
+  deleteProjectFormGroup(index: number) {
+    const projectGrp = this.resumeFormGroup.controls.formArray.get('3') as FormGroup;
+    let projects = projectGrp.controls.projects as FormArray;
+    if (projects.length > 1) {
+      projects.removeAt(index)
+    } else {
+      projects.reset()
     }
   }
 

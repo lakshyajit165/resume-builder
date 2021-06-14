@@ -87,21 +87,28 @@
                        <div  *ngFor="let edu of formArray?.get([1]).controls.education.controls let i = index">
                            <div [formGroupName]="i" class="mb-4">
                                 <div class="row">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
                                         <mat-form-field appearance="outline">
                                             <mat-label>School/College/University</mat-label>
                                             <input matInput formControlName="college_or_uni" placeholder="School/College/University" required>
                                             <mat-error>College name is required</mat-error>
                                         </mat-form-field>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
                                         <mat-form-field appearance="outline">
                                             <mat-label>Degree</mat-label>
                                             <input matInput formControlName="degree" placeholder="Degree" required>
                                             <mat-error>Degree is required</mat-error>
                                         </mat-form-field>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Discipline</mat-label>
+                                            <input matInput formControlName="discipline" placeholder="Discipline" required>
+                                            <mat-error>Discipline is required</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-3">
                                         <mat-form-field appearance="outline">
                                             <mat-label>Marks/Percentage/GPA</mat-label>
                                             <input matInput formControlName="marks_perc_gpa" placeholder="Marks/Percentage/GPA" required>

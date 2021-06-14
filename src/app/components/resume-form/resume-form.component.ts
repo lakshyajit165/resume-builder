@@ -104,6 +104,7 @@ export class ResumeFormComponent implements OnInit {
     return new FormGroup({
       'college_or_uni': new FormControl('', Validators.required),
       'degree': new FormControl('', Validators.required),
+      'discipline': new FormControl('', Validators.required),
       'from': new FormControl('', Validators.required),
       'to': new FormControl('', Validators.required),
       'marks_perc_gpa': new FormControl('', Validators.required)

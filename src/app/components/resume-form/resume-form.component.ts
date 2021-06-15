@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {StepperOrientation} from '@angular/material/stepper';
 import {Observable} from 'rxjs';
@@ -11,6 +11,7 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
+import { ErrorStateMatcher } from '@angular/material/core';
 
 
 export interface Skill {
@@ -79,7 +80,7 @@ export class ResumeFormComponent implements OnInit {
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-  
+  errorMatcher = new CustomErrorStateMatcher();
 
   get formArray(): AbstractControl | null {
     return this.resumeFormGroup.get('formArray');
@@ -155,7 +156,6 @@ export class ResumeFormComponent implements OnInit {
   addExperienceFormGroup() {
     const experienceGrp = this.resumeFormGroup.controls.formArray.get('2') as FormGroup;
     let experience = experienceGrp.controls.experience as FormArray;
-    console.log(this.resumeFormGroup.value);
     if(experience.length === 5)
         this.openSnackBar("Can't add more than 5 experiences!");
     else
@@ -226,11 +226,30 @@ export class ResumeFormComponent implements OnInit {
     }
   }
 
+  // generate resume
+  generateResume(): void {
+    console.log(
+      this.resumeFormGroup.value.formArray[0].name,
+      this.resumeFormGroup.value.formArray[0].email,
+      this.resumeFormGroup.value.formArray[0].mobile,
+      this.resumeFormGroup.value.formArray[0].github,
+      this.resumeFormGroup.value.formArray[0].linkedin,
+      this.resumeFormGroup.value.formArray[0].skills,
+      this.resumeFormGroup.value.formArray[1].education
+    );
+  }
+
   openSnackBar(msg: string) {
     this._snackBar.open(msg, 'Close', {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
       duration: 2000
     });
+  }
+}
+// shows error on a form/input field only if it's touched
+export class CustomErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl, form: NgForm | FormGroupDirective | null) {
+    return control && control.invalid && control.touched;
   }
 }

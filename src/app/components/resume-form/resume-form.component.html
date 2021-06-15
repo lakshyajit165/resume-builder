@@ -4,7 +4,7 @@
     </div>
     <form [formGroup]="resumeFormGroup">
         
-        <mat-stepper [linear]="false" #stepper formArrayName="formArray" [orientation]="(stepperOrientation | async)!">
+        <mat-stepper [linear]="true" #stepper formArrayName="formArray" [orientation]="(stepperOrientation | async)!">
 
             <!-- Personal Details -->
             <mat-step formGroupName="0" [stepControl]="formArray?.get([0])" [editable]="isEditable">
@@ -74,7 +74,7 @@
                     </div>
                    
                     <div>
-                    <button mat-raised-button color="primary" matStepperNext type="button" class="stepperNextBtn">Next</button>
+                    <button mat-raised-button color="primary" matStepperNext type="button" class="stepperNextBtn" [disabled]="!formArray?.get([0]).valid">Next</button>
                     </div>
                 </div>
             </mat-step>
@@ -90,28 +90,28 @@
                                     <div class="col-lg-3">
                                         <mat-form-field appearance="outline">
                                             <mat-label>School/College/University</mat-label>
-                                            <input matInput formControlName="college_or_uni" placeholder="School/College/University" required>
+                                            <input matInput formControlName="college_or_uni" placeholder="School/College/University" [errorStateMatcher]="errorMatcher" required>
                                             <mat-error>College name is required</mat-error>
                                         </mat-form-field>
                                     </div>
                                     <div class="col-lg-3">
                                         <mat-form-field appearance="outline">
                                             <mat-label>Degree</mat-label>
-                                            <input matInput formControlName="degree" placeholder="Degree" required>
+                                            <input matInput formControlName="degree" placeholder="Degree" [errorStateMatcher]="errorMatcher" required>
                                             <mat-error>Degree is required</mat-error>
                                         </mat-form-field>
                                     </div>
                                     <div class="col-lg-3">
                                         <mat-form-field appearance="outline">
                                             <mat-label>Discipline</mat-label>
-                                            <input matInput formControlName="discipline" placeholder="Discipline" required>
+                                            <input matInput formControlName="discipline" placeholder="Discipline" [errorStateMatcher]="errorMatcher" required>
                                             <mat-error>Discipline is required</mat-error>
                                         </mat-form-field>
                                     </div>
                                     <div class="col-lg-3">
                                         <mat-form-field appearance="outline">
                                             <mat-label>Marks/Percentage/GPA</mat-label>
-                                            <input matInput formControlName="marks_perc_gpa" placeholder="Marks/Percentage/GPA" required>
+                                            <input matInput formControlName="marks_perc_gpa" placeholder="Marks/Percentage/GPA" [errorStateMatcher]="errorMatcher" required>
                                             <mat-error>Marks details are required</mat-error>
                                         </mat-form-field>
                                     </div>
@@ -120,7 +120,7 @@
                                     <div class="col-lg-4">
                                         <mat-form-field appearance="outline">
                                             <mat-label>From</mat-label>
-                                            <input matInput formControlName="from" [matDatepicker]="picker1">
+                                            <input matInput formControlName="from" [matDatepicker]="picker1" [errorStateMatcher]="errorMatcher" required>
                                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                             <mat-datepicker #picker1></mat-datepicker>
                                             <mat-error>From date is required</mat-error>
@@ -129,7 +129,7 @@
                                     <div class="col-lg-4">
                                         <mat-form-field appearance="outline">
                                             <mat-label>To</mat-label>
-                                            <input matInput formControlName="to" [matDatepicker]="picker2">
+                                            <input matInput formControlName="to" [matDatepicker]="picker2" [errorStateMatcher]="errorMatcher" required>
                                             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                                             <mat-datepicker #picker2></mat-datepicker>
                                             <mat-error>To date is required</mat-error>
@@ -153,7 +153,7 @@
                     </div>
                     <div>
                         <button mat-raised-button matStepperPrevious type="button" class="stepperBackBtn">Back</button>
-                        <button mat-raised-button color="primary" matStepperNext type="button" class="stepperNextBtn">Next</button>
+                        <button mat-raised-button color="primary" matStepperNext type="button" class="stepperNextBtn" [disabled]="!formArray?.get([1]).valid">Next</button>
                     </div>
                 </div>
             </mat-step>
@@ -169,21 +169,21 @@
                                     <div class="col-lg-3">
                                         <mat-form-field appearance="outline">
                                             <mat-label>Organization</mat-label>
-                                            <input matInput formControlName="organization" placeholder="Organization" required>
+                                            <input matInput formControlName="organization" placeholder="Organization" [errorStateMatcher]="errorMatcher" required>
                                             <mat-error>Organization name is required</mat-error>
                                         </mat-form-field>
                                     </div>
                                     <div class="col-lg-3">
                                         <mat-form-field appearance="outline">
                                             <mat-label>Position</mat-label>
-                                            <input matInput formControlName="position" placeholder="Position" required>
+                                            <input matInput formControlName="position" placeholder="Position" [errorStateMatcher]="errorMatcher" required>
                                             <mat-error>Position is required</mat-error>
                                         </mat-form-field>
                                     </div>
                                     <div class="col-lg-3">
                                         <mat-form-field appearance="outline">
                                             <mat-label>From</mat-label>
-                                            <input matInput formControlName="from" [matDatepicker]="picker1">
+                                            <input matInput formControlName="from" [matDatepicker]="picker1" [errorStateMatcher]="errorMatcher" required>
                                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                             <mat-datepicker #picker1></mat-datepicker>
                                             <mat-error>From date is required</mat-error>
@@ -192,7 +192,7 @@
                                     <div class="col-lg-3">
                                         <mat-form-field appearance="outline">
                                             <mat-label>To</mat-label>
-                                            <input matInput formControlName="to" [matDatepicker]="picker2">
+                                            <input matInput formControlName="to" [matDatepicker]="picker2" [errorStateMatcher]="errorMatcher" required>
                                             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                                             <mat-datepicker #picker2></mat-datepicker>
                                             <mat-error>To date is required</mat-error>
@@ -203,7 +203,7 @@
                                     <div class="col-lg-8">
                                         <mat-form-field class="example-full-width" appearance="outline">
                                             <mat-label>Description</mat-label>
-                                            <textarea formControlName="description" rows="4" matInput placeholder="Describe your nature of work.."></textarea>
+                                            <textarea formControlName="description" rows="4" matInput placeholder="Describe your nature of work.." [errorStateMatcher]="errorMatcher" required></textarea>
                                             <mat-error>Description is required</mat-error>
                                         </mat-form-field>
                                     </div>
@@ -226,7 +226,7 @@
                     </div>
                     <div>
                         <button mat-raised-button matStepperPrevious type="button" class="stepperBackBtn">Back</button>
-                        <button mat-raised-button color="primary" matStepperNext type="button" class="stepperNextBtn">Next</button>
+                        <button mat-raised-button color="primary" matStepperNext type="button" class="stepperNextBtn" [disabled]="!formArray?.get([2]).valid">Next</button>
                     </div>
                 </div>
             </mat-step>
@@ -242,7 +242,7 @@
                                     <div class="col-lg-6">
                                         <mat-form-field appearance="outline">
                                             <mat-label>Title</mat-label>
-                                            <input matInput formControlName="title" placeholder="Project Title" required>
+                                            <input matInput formControlName="title" placeholder="Project Title" [errorStateMatcher]="errorMatcher" required>
                                             <mat-error>Project title is required</mat-error>
                                         </mat-form-field>
                                     </div>
@@ -257,7 +257,7 @@
                                     <div class="col-lg-8">
                                         <mat-form-field class="example-full-width" appearance="outline">
                                             <mat-label>Description</mat-label>
-                                            <textarea formControlName="description" rows="4" matInput placeholder="Describe your project.."></textarea>
+                                            <textarea formControlName="description" rows="4" matInput placeholder="Describe your project.." [errorStateMatcher]="errorMatcher" required></textarea>
                                             <mat-error>Project description is required</mat-error>
                                         </mat-form-field>
                                     </div>
@@ -280,7 +280,7 @@
                     </div>
                     <div>
                         <button mat-raised-button matStepperPrevious type="button" class="stepperBackBtn">Back</button>
-                        <button mat-raised-button color="primary" matStepperNext type="button" class="stepperNextBtn">Next</button>
+                        <button mat-raised-button color="primary" matStepperNext type="button" class="stepperNextBtn" [disabled]="!formArray?.get([3]).valid">Next</button>
                     </div>
                 </div>
             </mat-step>
@@ -296,7 +296,7 @@
                                     <div class="col-lg-8">
                                         <mat-form-field appearance="outline">
                                             <mat-label>Description</mat-label>
-                                            <input matInput formControlName="description" placeholder="Description" required>
+                                            <input matInput formControlName="description" placeholder="Description" [errorStateMatcher]="errorMatcher" required>
                                             <mat-error>Description is required</mat-error>
                                         </mat-form-field>
                                     </div>
@@ -318,7 +318,7 @@
                     </div>
                     <div>
                         <button mat-raised-button matStepperPrevious type="button" class="stepperBackBtn">Back</button>
-                        <button mat-raised-button color="primary" matStepperNext type="button" class="stepperNextBtn">Next</button>
+                        <button mat-raised-button color="primary" type="button" (click)="generateResume()" [disabled]="!formArray?.get([4]).valid">Submit</button>
                     </div>
                 </div>
             </mat-step>

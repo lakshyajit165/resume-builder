@@ -12,6 +12,7 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { CreateResumeService } from 'src/app/services/create-resume.service';
 
 
 export interface Skill {
@@ -61,6 +62,7 @@ export class ResumeFormComponent implements OnInit {
   }
 
   constructor(
+    private _createResume: CreateResumeService,
     private _snackBar: MatSnackBar,
     private _formBuilder: FormBuilder, 
     breakpointObserver: BreakpointObserver) {
@@ -228,15 +230,18 @@ export class ResumeFormComponent implements OnInit {
 
   // generate resume
   generateResume(): void {
-    console.log(
-      this.resumeFormGroup.value.formArray[0].name,
-      this.resumeFormGroup.value.formArray[0].email,
-      this.resumeFormGroup.value.formArray[0].mobile,
-      this.resumeFormGroup.value.formArray[0].github,
-      this.resumeFormGroup.value.formArray[0].linkedin,
-      this.resumeFormGroup.value.formArray[0].skills,
-      this.resumeFormGroup.value.formArray[1].education
-    );
+    let resumeData: object = {};
+    resumeData["name"] = this.resumeFormGroup.value.formArray[0].name;
+    resumeData["email"] = this.resumeFormGroup.value.formArray[0].email;
+    resumeData["mobile"] = this.resumeFormGroup.value.formArray[0].mobile;
+    resumeData["github"] = this.resumeFormGroup.value.formArray[0].github;
+    resumeData["linkedin"] = this.resumeFormGroup.value.formArray[0].linkedin;
+    resumeData["skills"] = this.resumeFormGroup.value.formArray[0].skills;
+    resumeData["education"] = this.resumeFormGroup.value.formArray[1].education;
+    resumeData["experience"] = this.resumeFormGroup.value.formArray[2].experience;
+    resumeData["projects"] = this.resumeFormGroup.value.formArray[3].projects;
+    resumeData["achievements"] = this.resumeFormGroup.value.formArray[4].hobbies_and_achievements;
+    console.log(resumeData);
   }
 
   openSnackBar(msg: string) {

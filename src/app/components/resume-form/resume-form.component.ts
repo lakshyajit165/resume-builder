@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {StepperOrientation} from '@angular/material/stepper';
-import {Observable} from 'rxjs';
+import {merge, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
@@ -59,6 +59,12 @@ export class ResumeFormComponent implements OnInit {
           })
       ])
     });
+    this.resumeFormGroup.controls.formArray.get('2.experience').valueChanges.subscribe(value => {
+      for(let i = 0; i<value.length; i++){
+        value[i].current_job ? this.resumeFormGroup.controls.formArray.get(`2.experience.${i}.to`).disable({emitEvent: false}) : this.resumeFormGroup.controls.formArray.get(`2.experience.${i}.to`).enable({emitEvent: false});
+      }
+    })
+
   }
 
   constructor(
@@ -120,7 +126,7 @@ export class ResumeFormComponent implements OnInit {
       'degree': new FormControl('', Validators.required),
       'discipline': new FormControl('', Validators.required),
       'from': new FormControl('', Validators.required),
-      'to': new FormControl('', Validators.required),
+      'to': new FormControl({ value: '', disabled: false }, Validators.required),
       'marks_perc_gpa': new FormControl('', Validators.required)
     })
   }
@@ -151,6 +157,7 @@ export class ResumeFormComponent implements OnInit {
       'position': new FormControl('', Validators.required),
       'from': new FormControl('', Validators.required),
       'to': new FormControl('', Validators.required),
+      'current_job': new FormControl(false, Validators.required),
       'description': new FormControl('', Validators.required)
     })
   }
@@ -243,6 +250,8 @@ export class ResumeFormComponent implements OnInit {
     resumeData["achievements"] = this.resumeFormGroup.value.formArray[4].hobbies_and_achievements;
     console.log(resumeData);
   }
+
+  
 
   openSnackBar(msg: string) {
     this._snackBar.open(msg, 'Close', {

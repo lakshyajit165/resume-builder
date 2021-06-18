@@ -166,21 +166,23 @@
                        <div  *ngFor="let ex of formArray?.get([2]).controls.experience.controls let i = index">
                            <div [formGroupName]="i" class="mb-4">
                                 <div class="row">
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-6">
                                         <mat-form-field appearance="outline">
                                             <mat-label>Organization</mat-label>
                                             <input matInput formControlName="organization" placeholder="Organization" [errorStateMatcher]="errorMatcher" required>
                                             <mat-error>Organization name is required</mat-error>
                                         </mat-form-field>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-6">
                                         <mat-form-field appearance="outline">
                                             <mat-label>Position</mat-label>
                                             <input matInput formControlName="position" placeholder="Position" [errorStateMatcher]="errorMatcher" required>
                                             <mat-error>Position is required</mat-error>
                                         </mat-form-field>
                                     </div>
-                                    <div class="col-lg-3">
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
                                         <mat-form-field appearance="outline">
                                             <mat-label>From</mat-label>
                                             <input matInput formControlName="from" [matDatepicker]="picker1" [errorStateMatcher]="errorMatcher" required>
@@ -189,7 +191,7 @@
                                             <mat-error>From date is required</mat-error>
                                         </mat-form-field>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <mat-form-field appearance="outline">
                                             <mat-label>To</mat-label>
                                             <input matInput formControlName="to" [matDatepicker]="picker2" [errorStateMatcher]="errorMatcher" required>
@@ -198,16 +200,21 @@
                                             <mat-error>To date is required</mat-error>
                                         </mat-form-field>
                                     </div>
+                                    <div class="col-lg-4">
+                                        
+                                        <mat-checkbox formControlName="current_job" class="mt-3 mb-3">Present Job</mat-checkbox>
+                                        
+                                    </div>
                                 </div>
                                 <div class="row mb-4">
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-10">
                                         <mat-form-field class="example-full-width" appearance="outline">
                                             <mat-label>Description</mat-label>
                                             <textarea formControlName="description" rows="4" matInput placeholder="Describe your nature of work.." [errorStateMatcher]="errorMatcher" required></textarea>
                                             <mat-error>Description is required</mat-error>
                                         </mat-form-field>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-2">
                                         <div class="example-button-container">
                                             <button mat-fab color="primary" class="form-add" type="button" (click)="addExperienceFormGroup()" aria-label="Example icon button with a home icon">
                                               <mat-icon>add</mat-icon>

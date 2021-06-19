@@ -13,6 +13,7 @@ import {
 } from '@angular/material/snack-bar';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { CreateResumeService } from 'src/app/services/create-resume.service';
+import { IResumeData } from 'src/app/models/IResumeData';
 
 
 export interface Skill {
@@ -89,6 +90,18 @@ export class ResumeFormComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   errorMatcher = new CustomErrorStateMatcher();
+  resumeFormData: IResumeData = {
+    name: '',
+    email: '',
+    github: '',
+    linkedin: '',
+    mobile: '',
+    skills: [],
+    education: [],
+    experience: [],
+    projects: [],
+    achievement: []
+  };
 
   get formArray(): AbstractControl | null {
     return this.resumeFormGroup.get('formArray');
@@ -237,18 +250,20 @@ export class ResumeFormComponent implements OnInit {
 
   // generate resume
   generateResume(): void {
-    let resumeData: object = {};
-    resumeData["name"] = this.resumeFormGroup.value.formArray[0].name;
-    resumeData["email"] = this.resumeFormGroup.value.formArray[0].email;
-    resumeData["mobile"] = this.resumeFormGroup.value.formArray[0].mobile;
-    resumeData["github"] = this.resumeFormGroup.value.formArray[0].github;
-    resumeData["linkedin"] = this.resumeFormGroup.value.formArray[0].linkedin;
-    resumeData["skills"] = this.resumeFormGroup.value.formArray[0].skills;
-    resumeData["education"] = this.resumeFormGroup.value.formArray[1].education;
-    resumeData["experience"] = this.resumeFormGroup.value.formArray[2].experience;
-    resumeData["projects"] = this.resumeFormGroup.value.formArray[3].projects;
-    resumeData["achievements"] = this.resumeFormGroup.value.formArray[4].hobbies_and_achievements;
-    console.log(resumeData);
+    this.resumeFormData.name = this.resumeFormGroup.value.formArray[0].name;
+    this.resumeFormData.email = this.resumeFormGroup.value.formArray[0].email;
+    this.resumeFormData.mobile = this.resumeFormGroup.value.formArray[0].mobile;
+    this.resumeFormData.github = this.resumeFormGroup.value.formArray[0].github;
+    this.resumeFormData.linkedin = this.resumeFormGroup.value.formArray[0].linkedin;
+    this.resumeFormData.skills = this.resumeFormGroup.value.formArray[0].skills;
+    this.resumeFormData.education = this.resumeFormGroup.value.formArray[1].education;
+    this.resumeFormData.experience = this.resumeFormGroup.value.formArray[2].experience;
+    this.resumeFormData.projects = this.resumeFormGroup.value.formArray[3].projects;
+    this.resumeFormData.achievement = this.resumeFormGroup.value.formArray[4].hobbies_and_achievements;
+    console.log(this.resumeFormData);
+    this._createResume.createResume(this.resumeFormData).subscribe(res => {
+      console.log(res);
+    })
   }
 
   

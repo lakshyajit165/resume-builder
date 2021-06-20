@@ -13,6 +13,9 @@ export class CreateResumeService {
     ) { }
       
     createResume(resumeData: IResumeData) {
-      return this.http.post(this.api + "/create_resume", resumeData);
+      return this.http.post(this.api + "/create_resume", resumeData, {
+        responseType: "blob",
+        headers: new HttpHeaders().append("Content-Type", "application/json")
+      });
     }
 }

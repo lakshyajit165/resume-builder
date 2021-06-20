@@ -14,6 +14,7 @@ import {
 import { ErrorStateMatcher } from '@angular/material/core';
 import { CreateResumeService } from 'src/app/services/create-resume.service';
 import { IResumeData } from 'src/app/models/IResumeData';
+import { saveAs } from 'file-saver';
 
 
 export interface Skill {
@@ -102,6 +103,7 @@ export class ResumeFormComponent implements OnInit {
     projects: [],
     achievement: []
   };
+  resumeLoadingStatus: boolean = false;
 
   get formArray(): AbstractControl | null {
     return this.resumeFormGroup.get('formArray');
@@ -250,6 +252,7 @@ export class ResumeFormComponent implements OnInit {
 
   // generate resume
   generateResume(): void {
+    this.resumeLoadingStatus = true;
     this.resumeFormData.name = this.resumeFormGroup.value.formArray[0].name;
     this.resumeFormData.email = this.resumeFormGroup.value.formArray[0].email;
     this.resumeFormData.mobile = this.resumeFormGroup.value.formArray[0].mobile;
@@ -260,9 +263,10 @@ export class ResumeFormComponent implements OnInit {
     this.resumeFormData.experience = this.resumeFormGroup.value.formArray[2].experience;
     this.resumeFormData.projects = this.resumeFormGroup.value.formArray[3].projects;
     this.resumeFormData.achievement = this.resumeFormGroup.value.formArray[4].hobbies_and_achievements;
-    console.log(this.resumeFormData);
-    this._createResume.createResume(this.resumeFormData).subscribe(res => {
-      console.log(res);
+    this._createResume.createResume(this.resumeFormData).subscribe(blob => {
+      saveAs(blob, "Resume.pdf"); 
+      this.resumeLoadingStatus = false;
+      this.openSnackBar('Resume download complete!')
     })
   }
 

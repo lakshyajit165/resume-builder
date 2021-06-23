@@ -5,7 +5,7 @@ import {StepperOrientation} from '@angular/material/stepper';
 import {merge, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {MatChipInputEvent} from '@angular/material/chips';
+import {MatChipInputEvent, MatChipList} from '@angular/material/chips';
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
@@ -28,7 +28,7 @@ export interface Skill {
 })
 export class ResumeFormComponent implements OnInit {
 
-  @ViewChild("chipList") chipList;
+  @ViewChild("chipList") chipList: MatChipList;
 
   ngOnInit() {
     this.resumeFormGroup = this._formBuilder.group({
@@ -66,7 +66,6 @@ export class ResumeFormComponent implements OnInit {
         value[i].current_job ? this.resumeFormGroup.controls.formArray.get(`2.experience.${i}.to`).disable({emitEvent: false}) : this.resumeFormGroup.controls.formArray.get(`2.experience.${i}.to`).enable({emitEvent: false});
       }
     })
-
   }
 
   constructor(
@@ -76,6 +75,7 @@ export class ResumeFormComponent implements OnInit {
     breakpointObserver: BreakpointObserver) {
       this.stepperOrientation = breakpointObserver.observe('(min-width: 800px)')
       .pipe(map(({matches}) => matches ? 'horizontal' : 'vertical'));
+     
   }
 
   resumeFormGroup: FormGroup;
@@ -119,6 +119,8 @@ export class ResumeFormComponent implements OnInit {
     }
     if (this.skillNames.length >= 8) {
       this.chipList.errorState = false;
+    } else {
+      this.chipList.errorState = true;
     }
     // Clear the input value
     event.chipInput!.clear();
@@ -128,11 +130,13 @@ export class ResumeFormComponent implements OnInit {
     const index = this.skillNames.indexOf(skillValue);
     if (index >= 0) {
       this.skillNames.splice(index, 1);
+      console.log(this.chipList.errorState);
     }
-
+    console.log(this.skillNames.length);
     if (this.skillNames.length < 8) {
       this.chipList.errorState = true;
     }
+
   }
   // education section functionalities
   createEducationFormGroup(): FormGroup {

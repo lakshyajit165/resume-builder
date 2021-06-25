@@ -262,7 +262,7 @@ export class ResumeFormComponent implements OnInit {
     this.resumeFormData.mobile = this.resumeFormGroup.value.formArray[0].mobile;
     this.resumeFormData.github = this.resumeFormGroup.value.formArray[0].github;
     this.resumeFormData.linkedin = this.resumeFormGroup.value.formArray[0].linkedin;
-    this.resumeFormData.skills = this.resumeFormGroup.value.formArray[0].skills;
+    this.resumeFormData.skills = this.getSkillsList(this.skillNames);
     this.resumeFormData.education = this.resumeFormGroup.value.formArray[1].education;
     this.resumeFormData.experience = this.resumeFormGroup.value.formArray[2].experience;
     this.resumeFormData.projects = this.resumeFormGroup.value.formArray[3].projects;
@@ -274,7 +274,13 @@ export class ResumeFormComponent implements OnInit {
     })
   }
 
-  
+  getSkillsList(skillNames: Skill[]): string[] {
+    let skills: string[] = [];
+    skillNames.forEach(skill => {
+      skills.push(skill.name);
+    });
+    return skills;
+  }
 
   openSnackBar(msg: string) {
     this._snackBar.open(msg, 'Close', {

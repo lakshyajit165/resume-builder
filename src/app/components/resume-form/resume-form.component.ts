@@ -36,11 +36,11 @@ export class ResumeFormComponent implements OnInit {
         this._formBuilder.array([
 
           this._formBuilder.group({
-            name: ['', Validators.required],
+            name: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30)]],
             email: ['', [Validators.required, Validators.email]],
-            github: ['', Validators.required],
-            linkedin: ['', Validators.required],
-            mobile: ['', Validators.required],
+            github: ['', [Validators.required, Validators.pattern(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/)]],
+            linkedin: ['', [Validators.required, Validators.pattern(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/)]],
+            mobile: ['', [Validators.required, Validators.pattern(/^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/)]],
             skills: [this.skillNames]
           }),
 

@@ -4,7 +4,7 @@
     </div>
     <form [formGroup]="resumeFormGroup">
         
-        <mat-stepper [linear]="false" #stepper formArrayName="formArray" [orientation]="(stepperOrientation | async)!">
+        <mat-stepper [linear]="true" #stepper formArrayName="formArray" [orientation]="(stepperOrientation | async)!">
 
             <!-- Personal Details -->
             <mat-step formGroupName="0" [stepControl]="formArray?.get([0])" [editable]="isEditable">
@@ -15,7 +15,7 @@
                             <mat-form-field appearance="outline">
                                 <mat-label>Name</mat-label>
                                 <input matInput formControlName="name" placeholder="Name" [errorStateMatcher]="errorMatcher" required>
-                                <mat-error>Name is required</mat-error>
+                                <mat-error>Name is required(Min. 5 & Max. 30 chars)</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="col-lg-4">

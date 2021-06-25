@@ -252,7 +252,7 @@
                                         <mat-form-field appearance="outline">
                                             <mat-label>Title</mat-label>
                                             <input matInput formControlName="title" placeholder="Project Title" [errorStateMatcher]="errorMatcher" required>
-                                            <mat-error>Project title is required</mat-error>
+                                            <mat-error>Project title is required(Min. 10 & Max. 80 chars)</mat-error>
                                         </mat-form-field>
                                     </div>
                                     <div class="col-lg-6">
@@ -267,7 +267,7 @@
                                         <mat-form-field class="example-full-width" appearance="outline">
                                             <mat-label>Description</mat-label>
                                             <textarea formControlName="description" rows="4" matInput placeholder="Describe your project.." [errorStateMatcher]="errorMatcher" required></textarea>
-                                            <mat-error>Project description is required</mat-error>
+                                            <mat-error>Project description is required(Min. 10 & Max. 450 chars)</mat-error>
                                         </mat-form-field>
                                     </div>
                                     <div class="col-lg-4">
@@ -306,7 +306,7 @@
                                         <mat-form-field appearance="outline">
                                             <mat-label>Description</mat-label>
                                             <input matInput formControlName="description" placeholder="Description" [errorStateMatcher]="errorMatcher" required>
-                                            <mat-error>Description is required</mat-error>
+                                            <mat-error>Description is required(Min. 10 & Max. 250 chars)</mat-error>
                                         </mat-form-field>
                                     </div>
                                     <div class="col-lg-4">
@@ -333,7 +333,8 @@
                                 <ng-template #submitTextBlock>
                                     Submit
                                 </ng-template>
-                            </button>
+                        </button>
+                        <p class="mt-3 mat-h3 foot-note">Note: The resume generated might stretch to more than 1 page depending on the content.</p>
                     </div>
                 </div>
             </mat-step>

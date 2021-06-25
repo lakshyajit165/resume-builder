@@ -202,9 +202,9 @@ export class ResumeFormComponent implements OnInit {
   // project section functionalities
   createProjectFormGroup(): FormGroup {
     return new FormGroup({
-      'title': new FormControl('', Validators.required),
-      'link': new FormControl(''),
-      'description': new FormControl('', Validators.required)
+      'title': new FormControl('', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(80)])),
+      'link': new FormControl('', Validators.pattern(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/)),
+      'description': new FormControl('', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(450)]))
     })
   }
 
@@ -230,7 +230,7 @@ export class ResumeFormComponent implements OnInit {
   // hobbies and achievements
   createHobbiesAndAchievementsFormGroup() {
     return new FormGroup({
-      'description': new FormControl('', Validators.required)
+      'description': new FormControl('', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(250)]))
     })
   }
 

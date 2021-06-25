@@ -8,6 +8,7 @@ import { IResumeData } from '../models/IResumeData';
 export class CreateResumeService {
 
     api: string = 'http://localhost:3000';
+    // api: string = 'https://resume-builder-server2.herokuapp.com/check';
     constructor(
       private http: HttpClient
     ) { }

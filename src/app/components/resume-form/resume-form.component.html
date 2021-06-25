@@ -172,14 +172,14 @@
                                         <mat-form-field appearance="outline">
                                             <mat-label>Organization</mat-label>
                                             <input matInput formControlName="organization" placeholder="Organization" [errorStateMatcher]="errorMatcher" required>
-                                            <mat-error>Organization name is required</mat-error>
+                                            <mat-error>Organization name is required(Min. 10 & Max. 400 chars)</mat-error>
                                         </mat-form-field>
                                     </div>
                                     <div class="col-lg-6">
                                         <mat-form-field appearance="outline">
                                             <mat-label>Position</mat-label>
                                             <input matInput formControlName="position" placeholder="Position" [errorStateMatcher]="errorMatcher" required>
-                                            <mat-error>Position is required</mat-error>
+                                            <mat-error>Position is required(Min. 10 & Max. 400 chars)</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -213,7 +213,7 @@
                                         <mat-form-field class="example-full-width" appearance="outline">
                                             <mat-label>Description</mat-label>
                                             <textarea formControlName="description" rows="4" matInput placeholder="Describe your nature of work.." [errorStateMatcher]="errorMatcher" required></textarea>
-                                            <mat-error>Description is required</mat-error>
+                                            <mat-error>Description is required(Min. 10 & Max. 400 chars)</mat-error>
                                         </mat-form-field>
                                     </div>
                                     <div class="col-lg-2">

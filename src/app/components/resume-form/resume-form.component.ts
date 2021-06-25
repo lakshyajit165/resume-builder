@@ -171,12 +171,12 @@ export class ResumeFormComponent implements OnInit {
   // experience section functionalities
   createExperienceFormGroup(): FormGroup {
     return new FormGroup({
-      'organization': new FormControl('', Validators.required),
-      'position': new FormControl('', Validators.required),
+      'organization': new FormControl('', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(400)])),
+      'position': new FormControl('', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(400)])),
       'from': new FormControl('', Validators.required),
       'to': new FormControl('', Validators.required),
       'current_job': new FormControl(false, Validators.required),
-      'description': new FormControl('', Validators.required)
+      'description': new FormControl('', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(400)]))
     })
   }
   

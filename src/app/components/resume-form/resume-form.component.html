@@ -29,6 +29,7 @@
                             <mat-form-field appearance="outline">
                                 <mat-label>Mobile</mat-label>
                                 <input matInput formControlName="mobile" placeholder="Mobile" [errorStateMatcher]="errorMatcher" required>
+                                <mat-hint>(with country code)</mat-hint>
                                 <mat-error>Mobile no. is required</mat-error>
                             </mat-form-field>
                         </div>
@@ -92,21 +93,21 @@
                                         <mat-form-field appearance="outline">
                                             <mat-label>School/College/University</mat-label>
                                             <input matInput formControlName="college_or_uni" placeholder="School/College/University" [errorStateMatcher]="errorMatcher" required>
-                                            <mat-error>College name is required</mat-error>
+                                            <mat-error>College name is required(Min. 10 & Max. 100 chars)</mat-error>
                                         </mat-form-field>
                                     </div>
                                     <div class="col-lg-3">
                                         <mat-form-field appearance="outline">
                                             <mat-label>Degree</mat-label>
                                             <input matInput formControlName="degree" placeholder="Degree" [errorStateMatcher]="errorMatcher" required>
-                                            <mat-error>Degree is required</mat-error>
+                                            <mat-error>Degree is required(Min. 5 & Max. 100 chars)</mat-error>
                                         </mat-form-field>
                                     </div>
                                     <div class="col-lg-3">
                                         <mat-form-field appearance="outline">
                                             <mat-label>Discipline</mat-label>
                                             <input matInput formControlName="discipline" placeholder="Discipline" [errorStateMatcher]="errorMatcher" required>
-                                            <mat-error>Discipline is required</mat-error>
+                                            <mat-error>Discipline is required(Min. 5 & Max. 100 chars)</mat-error>
                                         </mat-form-field>
                                     </div>
                                     <div class="col-lg-3">

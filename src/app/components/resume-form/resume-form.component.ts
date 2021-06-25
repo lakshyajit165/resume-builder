@@ -130,9 +130,8 @@ export class ResumeFormComponent implements OnInit {
     const index = this.skillNames.indexOf(skillValue);
     if (index >= 0) {
       this.skillNames.splice(index, 1);
-      console.log(this.chipList.errorState);
     }
-    console.log(this.skillNames.length);
+    
     if (this.skillNames.length < 8) {
       this.chipList.errorState = true;
     }
@@ -141,9 +140,9 @@ export class ResumeFormComponent implements OnInit {
   // education section functionalities
   createEducationFormGroup(): FormGroup {
     return new FormGroup({
-      'college_or_uni': new FormControl('', Validators.required),
-      'degree': new FormControl('', Validators.required),
-      'discipline': new FormControl('', Validators.required),
+      'college_or_uni': new FormControl('',  Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(100)])),
+      'degree': new FormControl('',  Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(100)])),
+      'discipline': new FormControl('',  Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(100)])),
       'from': new FormControl('', Validators.required),
       'to': new FormControl({ value: '', disabled: false }, Validators.required),
       'marks_perc_gpa': new FormControl('', Validators.required)

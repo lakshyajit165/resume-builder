@@ -4,7 +4,7 @@
     </div>
     <form [formGroup]="resumeFormGroup">
         
-        <mat-stepper [linear]="false" #stepper formArrayName="formArray" [orientation]="(stepperOrientation | async)!">
+        <mat-stepper [linear]="true" #stepper formArrayName="formArray" [orientation]="(stepperOrientation | async)!">
 
             <!-- Personal Details -->
             <mat-step formGroupName="0" [stepControl]="formArray?.get([0])" [editable]="isEditable">

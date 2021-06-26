@@ -4,7 +4,7 @@
     </div>
     <form [formGroup]="resumeFormGroup">
         
-        <mat-stepper [linear]="true" #stepper formArrayName="formArray" [orientation]="(stepperOrientation | async)!">
+        <mat-stepper [linear]="false" #stepper formArrayName="formArray" [orientation]="(stepperOrientation | async)!">
 
             <!-- Personal Details -->
             <mat-step formGroupName="0" [stepControl]="formArray?.get([0])" [editable]="isEditable">
@@ -327,13 +327,14 @@
                     </div>
                     <div>
                         <button mat-raised-button matStepperPrevious type="button" class="stepperBackBtn" [disabled]="resumeLoadingStatus">Back</button>
-                            <button mat-raised-button color="primary" type="button" (click)="generateResume()" [disabled]="!formArray?.get([4]).valid || resumeLoadingStatus">
-                                <mat-icon *ngIf="resumeLoadingStatus; else submitTextBlock"><mat-spinner diameter="20">
-                                </mat-spinner></mat-icon>
-                                <ng-template #submitTextBlock>
-                                    Submit
-                                </ng-template>
+                        <button mat-raised-button color="primary" type="button" (click)="generateResume()" [disabled]="!formArray?.get([4]).valid || resumeLoadingStatus">
+                            <mat-icon *ngIf="resumeLoadingStatus; else submitTextBlock"><mat-spinner diameter="20">
+                            </mat-spinner></mat-icon>
+                            <ng-template #submitTextBlock>
+                                Submit
+                            </ng-template>
                         </button>
+                        <button mat-button type="button" [disabled]="resumeLoadingStatus" (click)="stepper.reset(); resetSkillsField()">RESET</button>
                         <p class="mt-3 mat-h3 foot-note">Note: The resume generated might stretch to more than 1 page depending on the content.</p>
                     </div>
                 </div>

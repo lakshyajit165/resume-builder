@@ -281,6 +281,10 @@ export class ResumeFormComponent implements OnInit {
     return skills;
   }
 
+  resetSkillsField(): void {
+    this.skillNames = [];
+  }
+
   openSnackBar(msg: string) {
     this._snackBar.open(msg, 'Close', {
       horizontalPosition: this.horizontalPosition,

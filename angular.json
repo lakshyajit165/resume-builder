@@ -123,6 +123,10 @@
               "devServerTarget": "resume-builder:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
     }

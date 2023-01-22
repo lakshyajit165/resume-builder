@@ -24,58 +24,99 @@ export interface Skill {
 @Component({
   selector: 'app-resume-form',
   templateUrl: './resume-form.component.html',
-  styleUrls: ['./resume-form.component.css']
+  styleUrls: ['./resume-form.component.css'],
 })
 export class ResumeFormComponent implements OnInit {
-
-  @ViewChild("chipList") chipList: MatChipList;
+  @ViewChild('chipList') chipList: MatChipList;
 
   ngOnInit() {
     this.resumeFormGroup = this._formBuilder.group({
-      formArray: 
-        this._formBuilder.array([
+      formArray: this._formBuilder.array([
+        this._formBuilder.group({
+          name: [
+            '',
+            [
+              Validators.required,
+              Validators.minLength(5),
+              Validators.maxLength(30),
+            ],
+          ],
+          email: ['', [Validators.required, Validators.email]],
+          github: [
+            '',
+            [
+              Validators.required,
+              Validators.pattern(
+                /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
+              ),
+            ],
+          ],
+          linkedin: [
+            '',
+            [
+              Validators.required,
+              Validators.pattern(
+                /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
+              ),
+            ],
+          ],
+          mobile: [
+            '',
+            [
+              Validators.required,
+              Validators.pattern(
+                /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/
+              ),
+            ],
+          ],
+          skills: [this.skillNames],
+        }),
 
-          this._formBuilder.group({
-            name: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30)]],
-            email: ['', [Validators.required, Validators.email]],
-            github: ['', [Validators.required, Validators.pattern(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/)]],
-            linkedin: ['', [Validators.required, Validators.pattern(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/)]],
-            mobile: ['', [Validators.required, Validators.pattern(/^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/)]],
-            skills: [this.skillNames]
-          }),
+        this._formBuilder.group({
+          education: this._formBuilder.array([this.createEducationFormGroup()]),
+        }),
 
-          this._formBuilder.group({
-            education: this._formBuilder.array([this.createEducationFormGroup()])
-          }),
+        this._formBuilder.group({
+          experience: this._formBuilder.array([
+            this.createExperienceFormGroup(),
+          ]),
+        }),
 
-          this._formBuilder.group({
-            experience: this._formBuilder.array([this.createExperienceFormGroup()])
-          }),
+        this._formBuilder.group({
+          projects: this._formBuilder.array([this.createProjectFormGroup()]),
+        }),
 
-          this._formBuilder.group({
-            projects: this._formBuilder.array([this.createProjectFormGroup()])
-          }),
-
-          this._formBuilder.group({
-            hobbies_and_achievements: this._formBuilder.array([this.createHobbiesAndAchievementsFormGroup()])
-          })
-      ])
+        this._formBuilder.group({
+          hobbies_and_achievements: this._formBuilder.array([
+            this.createHobbiesAndAchievementsFormGroup(),
+          ]),
+        }),
+      ]),
     });
-    this.resumeFormGroup.controls.formArray.get('2.experience').valueChanges.subscribe(value => {
-      for(let i = 0; i<value.length; i++){
-        value[i].current_job ? this.resumeFormGroup.controls.formArray.get(`2.experience.${i}.to`).disable({emitEvent: false}) : this.resumeFormGroup.controls.formArray.get(`2.experience.${i}.to`).enable({emitEvent: false});
-      }
-    })
+    this.resumeFormGroup.controls.formArray
+      .get('2.experience')
+      .valueChanges.subscribe((value) => {
+        for (let i = 0; i < value.length; i++) {
+          value[i].current_job
+            ? this.resumeFormGroup.controls.formArray
+                .get(`2.experience.${i}.to`)
+                .disable({ emitEvent: false })
+            : this.resumeFormGroup.controls.formArray
+                .get(`2.experience.${i}.to`)
+                .enable({ emitEvent: false });
+        }
+      });
   }
 
   constructor(
     private _createResume: CreateResumeService,
     private _snackBar: MatSnackBar,
-    private _formBuilder: FormBuilder, 
-    breakpointObserver: BreakpointObserver) {
-      this.stepperOrientation = breakpointObserver.observe('(min-width: 800px)')
-      .pipe(map(({matches}) => matches ? 'horizontal' : 'vertical'));
-     
+    private _formBuilder: FormBuilder,
+    breakpointObserver: BreakpointObserver
+  ) {
+    this.stepperOrientation = breakpointObserver
+      .observe('(min-width: 800px)')
+      .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
   }
 
   resumeFormGroup: FormGroup;
@@ -101,7 +142,7 @@ export class ResumeFormComponent implements OnInit {
     education: [],
     experience: [],
     projects: [],
-    achievement: []
+    achievement: [],
   };
   resumeLoadingStatus: boolean = false;
 
@@ -109,13 +150,12 @@ export class ResumeFormComponent implements OnInit {
     return this.resumeFormGroup.get('formArray');
   }
 
-
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
     // Add skill
     if (value) {
-      this.skillNames.push({name: value});
+      this.skillNames.push({ name: value });
     }
     if (this.skillNames.length >= 8) {
       this.chipList.errorState = false;
@@ -131,125 +171,204 @@ export class ResumeFormComponent implements OnInit {
     if (index >= 0) {
       this.skillNames.splice(index, 1);
     }
-    
+
     if (this.skillNames.length < 8) {
       this.chipList.errorState = true;
     }
-
   }
   // education section functionalities
   createEducationFormGroup(): FormGroup {
     return new FormGroup({
-      'college_or_uni': new FormControl('',  Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(100)])),
-      'degree': new FormControl('',  Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(100)])),
-      'discipline': new FormControl('',  Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(100)])),
-      'from': new FormControl('', Validators.required),
-      'to': new FormControl({ value: '', disabled: false }, Validators.required),
-      'marks_perc_gpa': new FormControl('', Validators.required)
-    })
+      college_or_uni: new FormControl(
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(100),
+        ])
+      ),
+      degree: new FormControl(
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(100),
+        ])
+      ),
+      discipline: new FormControl(
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(100),
+        ])
+      ),
+      from: new FormControl('', Validators.required),
+      to: new FormControl({ value: '', disabled: false }, Validators.required),
+      marks_perc_gpa: new FormControl('', Validators.required),
+    });
   }
-  
+
   addEducationFormGroup() {
-    const educationGrp = this.resumeFormGroup.controls.formArray.get('1') as FormGroup;
+    const educationGrp = this.resumeFormGroup.controls.formArray.get(
+      '1'
+    ) as FormGroup;
     let education = educationGrp.controls.education as FormArray;
-    if(education.length === 3)
-        this.openSnackBar("Can't add more than 3 education fields!");
-    else
-        education.push(this.createEducationFormGroup());
+    if (education.length === 3)
+      this.openSnackBar("Can't add more than 3 education fields!");
+    else education.push(this.createEducationFormGroup());
   }
 
   deleteEducationFormGroup(index: number) {
-    const educationGrp = this.resumeFormGroup.controls.formArray.get('1') as FormGroup;
+    const educationGrp = this.resumeFormGroup.controls.formArray.get(
+      '1'
+    ) as FormGroup;
     let education = educationGrp.controls.education as FormArray;
     if (education.length > 1) {
-      education.removeAt(index)
+      education.removeAt(index);
     } else {
-      education.reset()
+      education.reset();
     }
   }
 
   // experience section functionalities
   createExperienceFormGroup(): FormGroup {
     return new FormGroup({
-      'organization': new FormControl('', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(400)])),
-      'position': new FormControl('', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(400)])),
-      'from': new FormControl('', Validators.required),
-      'to': new FormControl('', Validators.required),
-      'current_job': new FormControl(false, Validators.required),
-      'description': new FormControl('', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(400)]))
-    })
+      organization: new FormControl(
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(400),
+        ])
+      ),
+      position: new FormControl(
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(400),
+        ])
+      ),
+      from: new FormControl('', Validators.required),
+      to: new FormControl('', Validators.required),
+      current_job: new FormControl(false, Validators.required),
+      description: new FormControl(
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(400),
+        ])
+      ),
+    });
   }
-  
+
   addExperienceFormGroup() {
-    const experienceGrp = this.resumeFormGroup.controls.formArray.get('2') as FormGroup;
+    const experienceGrp = this.resumeFormGroup.controls.formArray.get(
+      '2'
+    ) as FormGroup;
     let experience = experienceGrp.controls.experience as FormArray;
-    if(experience.length === 5)
-        this.openSnackBar("Can't add more than 5 experiences!");
-    else
-        experience.push(this.createExperienceFormGroup());
+    if (experience.length === 5)
+      this.openSnackBar("Can't add more than 5 experiences!");
+    else experience.push(this.createExperienceFormGroup());
   }
 
   deleteExperienceFormGroup(index: number) {
-    const experienceGrp = this.resumeFormGroup.controls.formArray.get('2') as FormGroup;
+    const experienceGrp = this.resumeFormGroup.controls.formArray.get(
+      '2'
+    ) as FormGroup;
     let experience = experienceGrp.controls.experience as FormArray;
     if (experience.length > 1) {
-      experience.removeAt(index)
+      experience.removeAt(index);
     } else {
-      experience.reset()
+      experience.reset();
     }
   }
 
   // project section functionalities
   createProjectFormGroup(): FormGroup {
     return new FormGroup({
-      'title': new FormControl('', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(80)])),
-      'link': new FormControl('', Validators.pattern(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/)),
-      'description': new FormControl('', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(450)]))
-    })
+      title: new FormControl(
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(80),
+        ])
+      ),
+      link: new FormControl(
+        '',
+        Validators.pattern(
+          /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
+        )
+      ),
+      description: new FormControl(
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(450),
+        ])
+      ),
+    });
   }
 
   addProjectFormGroup() {
-    const projectGrp = this.resumeFormGroup.controls.formArray.get('3') as FormGroup;
+    const projectGrp = this.resumeFormGroup.controls.formArray.get(
+      '3'
+    ) as FormGroup;
     let projects = projectGrp.controls.projects as FormArray;
-    if(projects.length === 5)
-        this.openSnackBar("Can't add more than 5 projects!");
-    else
-        projects.push(this.createProjectFormGroup());
+    if (projects.length === 5)
+      this.openSnackBar("Can't add more than 5 projects!");
+    else projects.push(this.createProjectFormGroup());
   }
 
   deleteProjectFormGroup(index: number) {
-    const projectGrp = this.resumeFormGroup.controls.formArray.get('3') as FormGroup;
+    const projectGrp = this.resumeFormGroup.controls.formArray.get(
+      '3'
+    ) as FormGroup;
     let projects = projectGrp.controls.projects as FormArray;
     if (projects.length > 1) {
-      projects.removeAt(index)
+      projects.removeAt(index);
     } else {
-      projects.reset()
+      projects.reset();
     }
   }
 
   // hobbies and achievements
   createHobbiesAndAchievementsFormGroup() {
     return new FormGroup({
-      'description': new FormControl('', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(250)]))
-    })
+      description: new FormControl(
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(250),
+        ])
+      ),
+    });
   }
 
   addHobbiesAndAchievementsFormGroup() {
-    const hobbiesGrp = this.resumeFormGroup.controls.formArray.get('4') as FormGroup;
+    const hobbiesGrp = this.resumeFormGroup.controls.formArray.get(
+      '4'
+    ) as FormGroup;
     let hobbies = hobbiesGrp.controls.hobbies_and_achievements as FormArray;
-    if(hobbies.length === 6)
-        this.openSnackBar("Can't add more than 6 achievements!");
-    else
-        hobbies.push(this.createHobbiesAndAchievementsFormGroup());
+    if (hobbies.length === 6)
+      this.openSnackBar("Can't add more than 6 achievements!");
+    else hobbies.push(this.createHobbiesAndAchievementsFormGroup());
   }
 
   deleteHobbiesAndAchievementsFormGroup(index: number) {
-    const hobbiesGrp = this.resumeFormGroup.controls.formArray.get('4') as FormGroup;
+    const hobbiesGrp = this.resumeFormGroup.controls.formArray.get(
+      '4'
+    ) as FormGroup;
     let hobbies = hobbiesGrp.controls.hobbies_and_achievements as FormArray;
     if (hobbies.length > 1) {
-      hobbies.removeAt(index)
+      hobbies.removeAt(index);
     } else {
-      hobbies.reset()
+      hobbies.reset();
     }
   }
 
@@ -260,22 +379,36 @@ export class ResumeFormComponent implements OnInit {
     this.resumeFormData.email = this.resumeFormGroup.value.formArray[0].email;
     this.resumeFormData.mobile = this.resumeFormGroup.value.formArray[0].mobile;
     this.resumeFormData.github = this.resumeFormGroup.value.formArray[0].github;
-    this.resumeFormData.linkedin = this.resumeFormGroup.value.formArray[0].linkedin;
+    this.resumeFormData.linkedin =
+      this.resumeFormGroup.value.formArray[0].linkedin;
     this.resumeFormData.skills = this.getSkillsList(this.skillNames);
-    this.resumeFormData.education = this.resumeFormGroup.value.formArray[1].education;
-    this.resumeFormData.experience = this.resumeFormGroup.value.formArray[2].experience;
-    this.resumeFormData.projects = this.resumeFormGroup.value.formArray[3].projects;
-    this.resumeFormData.achievement = this.resumeFormGroup.value.formArray[4].hobbies_and_achievements;
-    this._createResume.createResume(this.resumeFormData).subscribe(blob => {
-      saveAs(blob, "Resume.pdf"); 
+    this.resumeFormData.education =
+      this.resumeFormGroup.value.formArray[1].education;
+    this.resumeFormData.experience =
+      this.resumeFormGroup.value.formArray[2].experience;
+    this.resumeFormData.projects =
+      this.resumeFormGroup.value.formArray[3].projects;
+    this.resumeFormData.achievement =
+      this.resumeFormGroup.value.formArray[4].hobbies_and_achievements;
+    this._createResume.createResume(this.resumeFormData).subscribe((blob) => {
+      saveAs(blob, 'Resume.pdf');
       this.resumeLoadingStatus = false;
-      this.openSnackBar('Resume download complete!')
-    })
+      this.openSnackBar('Resume download complete!');
+    });
+  }
+
+  // generate sample resume
+  generateSampleResume(): void {
+    this._createResume.createSampleResume().subscribe((blob) => {
+      saveAs(blob, 'Resume.pdf');
+      this.resumeLoadingStatus = false;
+      this.openSnackBar('Resume download complete!');
+    });
   }
 
   getSkillsList(skillNames: Skill[]): string[] {
     let skills: string[] = [];
-    skillNames.forEach(skill => {
+    skillNames.forEach((skill) => {
       skills.push(skill.name);
     });
     return skills;
@@ -289,7 +422,7 @@ export class ResumeFormComponent implements OnInit {
     this._snackBar.open(msg, 'Close', {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
-      duration: 2000
+      duration: 2000,
     });
   }
 }

@@ -145,6 +145,7 @@ export class ResumeFormComponent implements OnInit {
     achievement: [],
   };
   resumeLoadingStatus: boolean = false;
+  sampleResumeLoadingStatus: boolean = false;
 
   get formArray(): AbstractControl | null {
     return this.resumeFormGroup.get('formArray');
@@ -399,10 +400,12 @@ export class ResumeFormComponent implements OnInit {
 
   // generate sample resume
   generateSampleResume(): void {
+    this.sampleResumeLoadingStatus = true;
     this._createResume.createSampleResume().subscribe((blob) => {
       saveAs(blob, 'Resume.pdf');
       this.resumeLoadingStatus = false;
       this.openSnackBar('Resume download complete!');
+      this.sampleResumeLoadingStatus = false;
     });
   }
 

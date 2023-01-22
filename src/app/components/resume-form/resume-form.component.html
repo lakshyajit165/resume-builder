@@ -4,12 +4,18 @@
         <p class="page-subtitle">Fill in the details to get started.
         
         </p>
-        <span class="sample-dnld-btn">
-            <button mat-stroked-button color="primary" type="button" (click)="generateSampleResume()">Download
-                Sample
-                <mat-icon>save_alt</mat-icon>
+        <div class="sample-dnld-btn">
+            <button mat-stroked-button color="primary" type="button" [disabled]="sampleResumeLoadingStatus"
+                (click)="generateSampleResume()">
+                <mat-icon *ngIf="!sampleResumeLoadingStatus">save_alt</mat-icon>
+                <span *ngIf="!sampleResumeLoadingStatus">Download Sample</span>
+                <mat-icon *ngIf="sampleResumeLoadingStatus">
+                    <mat-spinner diameter="20">
+                    </mat-spinner>
+                </mat-icon>
+                <span *ngIf="sampleResumeLoadingStatus">Downloading...</span>
             </button>
-        </span>
+            </div>
     </div>
             <form [formGroup]="resumeFormGroup">
         

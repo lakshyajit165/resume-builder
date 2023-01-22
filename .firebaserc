@@ -1,11 +1,5 @@
 {
-  "targets": {
-    "lk-resumebuilder": {
-      "hosting": {
-        "resume-builder": [
-          "lk-resumebuilder"
-        ]
-      }
-    }
+  "projects": {
+    "default": "lk-resume-builder"
   }
 }

@@ -1,39 +1,39 @@
 mat-form-field {
-    width: 100%;
+  width: 100%;
 }
 .form-add {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
 .form-remove {
-    margin-left: 5px;
+  margin-left: 5px;
 }
 
 .stepperNextBtn {
-    margin-left: 5px;
+  margin-left: 5px;
 }
 
 .stepperBackBtn {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
 .page-title {
-    margin-left: 30px;
-    margin-top: 30px;
-    padding-top: 40px;
-    font-size: 40px;
-    line-height: 40px;
-    font-family: 'Commissioner', sans-serif;
+  margin-left: 30px;
+  margin-top: 30px;
+  padding-top: 40px;
+  font-size: 40px;
+  line-height: 40px;
+  font-family: "Commissioner", sans-serif;
 }
 .page-subtitle {
-    margin-left: 30px;
-    font-family: 'Commissioner', sans-serif;
+  margin-left: 30px;
+  font-family: "Commissioner", sans-serif;
 }
 
 .foot-note {
-    font-family: 'Commissioner', sans-serif;   
+  font-family: "Commissioner", sans-serif;
 }
 
 .sample-dnld-btn {
-    margin-left: 30px;
+  margin-left: 30px;
 }

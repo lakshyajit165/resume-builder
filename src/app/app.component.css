@@ -1,7 +1,38 @@
 .example-stepper {
-    margin-top: 8px;
+  margin-top: 8px;
 }
-  
+
 .mat-form-field {
-    margin-top: 16px;
+  margin-top: 16px;
+}
+
+.toolbar-menu {
+  display: flex;
+  justify-content: space-around;
+}
+
+.toolbar-menu-item {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 20px;
+  cursor: pointer;
+  font-weight: normal;
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.component-section {
+  height: 100vh;
+}
+
+.primary-color {
+  color: var(--resume-builder-primary);
 }

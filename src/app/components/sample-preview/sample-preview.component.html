@@ -1,0 +1,70 @@
+<section class="container col-md-5">
+  <div class="p-3 mx-auto">
+    <div class="mr-auto">
+      <h1 class="header-name">{{ resumeDetails.name }}</h1>
+      <p>
+        <span><strong>Email:</strong> </span> {{ resumeDetails.email }},
+        <span><strong>Contact:</strong> </span>{{ resumeDetails.contact }},
+        <span><strong>Github:</strong> </span>{{ resumeDetails.github }},
+        <span><strong>LinkedIn:</strong> </span>{{ resumeDetails.linkedin }}
+      </p>
+    </div>
+
+    <div class="resume-body">
+      <div class="technical_skills_section">
+        <h2 class="section-name"><b>Technical Skills</b></h2>
+        <p>
+          {{ resumeDetails.technical_skills }}
+        </p>
+      </div>
+
+      <div class="education_section">
+        <h2 class="section-name"><strong>Education</strong></h2>
+        <div *ngFor="let edu of resumeDetails.education">
+          <li>
+            <strong>{{ edu.degree }}</strong> in
+            <strong>{{ edu.discipline }}</strong> from {{ edu.college_or_uni }},
+            [
+            <strong
+              >{{ edu.from }} - {{ edu.to }}, {{ edu.marks_perc_gpa }} </strong
+            >]
+          </li>
+        </div>
+      </div>
+
+      <div class="experience_section">
+        <h2 class="section-name"><strong>Experience</strong></h2>
+        <div *ngFor="let exp of resumeDetails.experience">
+          <li>
+            <strong
+              >{{ exp.organization }} ({{ exp.position }}, {{ exp.from }} -
+              {{ exp.to }} ) </strong
+            ><br />{{ exp.description }}
+          </li>
+        </div>
+      </div>
+
+      <div class="project_section">
+        <h2 class="section-name"><strong>Projects</strong></h2>
+        <div *ngFor="let prj of resumeDetails.projects">
+          <li>
+            <strong>{{ prj.title }}</strong
+            >: {{ prj.description }}
+            {{ prj.link }}
+          </li>
+        </div>
+      </div>
+
+      <div class="hobbies_section">
+        <h2 class="section-name">
+          <strong>Extra Curriculars / Hobbies</strong>
+        </h2>
+        <div *ngFor="let ext of resumeDetails.extras">
+          <li>
+            {{ ext }}
+          </li>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

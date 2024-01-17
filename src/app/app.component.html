@@ -1,1 +1,18 @@
-<app-resume-form></app-resume-form>
+<!-- <app-resume-form></app-resume-form> -->
+<section class="component-section">
+  <mat-toolbar>
+    <div class="toolbar-menu mx-auto">
+      <span
+        class="toolbar-menu-item mat-headline-4"
+        (click)="goToRoute('/home')"
+      >
+        Home</span
+      >
+      <span class="toolbar-menu-item" (click)="goToRoute('/preview')">
+        Sample Preview
+      </span>
+    </div>
+  </mat-toolbar>
+  <router-outlet></router-outlet>
+  <mat-toolbar></mat-toolbar>
+</section>

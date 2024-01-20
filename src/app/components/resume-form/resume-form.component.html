@@ -1,9 +1,30 @@
-<div class="container col-lg-8 mx-auto">
+<section class="container col-lg-8 mx-auto resume-form-section">
   <h3 class="mat-h3 page-title" color="primary">Let's create your resume!</h3>
-  <div class="row col-lg-12 subtitle-section">
-    <div class="col-lg-6 pt-2">
-      <p class="">
-        Fill in the details to get started.
+  <div class="subtitle-content">
+    <div class="subtitle-text">
+      <p>Fill in the details to get started.</p>
+    </div>
+    <div class="download-preview-button">
+      <button
+        mat-button
+        color="primary"
+        type="button"
+        [disabled]="sampleResumeLoadingStatus"
+        (click)="generateSampleResume()"
+      >
+        <mat-icon *ngIf="!sampleResumeLoadingStatus">save_alt</mat-icon>
+        <span *ngIf="!sampleResumeLoadingStatus">Download Sample</span>
+        <mat-icon *ngIf="sampleResumeLoadingStatus">
+          <mat-spinner diameter="20"> </mat-spinner>
+        </mat-icon>
+        <span *ngIf="sampleResumeLoadingStatus">Downloading...</span>
+      </button>
+    </div>
+  </div>
+  <!-- <div class="row col-lg-12 subtitle-section">
+    <div class="row col-lg-12 pt-2">
+      <p class="col-lg-2">Fill in the details to get started.</p>
+      <div class="col-lg-3">
         <button
           mat-button
           color="primary"
@@ -18,10 +39,10 @@
           </mat-icon>
           <span *ngIf="sampleResumeLoadingStatus">Downloading...</span>
         </button>
-      </p>
+      </div>
     </div>
     <div class="col-lg-9"></div>
-  </div>
+  </div> -->
   <form [formGroup]="resumeFormGroup">
     <mat-stepper
       [linear]="true"
@@ -151,7 +172,7 @@
                   !formArray?.get([0]).controls.skills.touched)
               "
             >
-              Next<mat-icon>navigate_next</mat-icon>
+              Next<mat-icon inline="true">navigate_next</mat-icon>
             </button>
           </div>
         </div>
@@ -309,7 +330,7 @@
               type="button"
               class="stepperBackBtn"
             >
-              <mat-icon>navigate_before</mat-icon>Back
+              <mat-icon inline="true">navigate_before</mat-icon>Back
             </button>
             <button
               mat-raised-button
@@ -319,7 +340,7 @@
               class="stepperNextBtn"
               [disabled]="!formArray?.get([1]).valid"
             >
-              Next<mat-icon>navigate_next</mat-icon>
+              Next<mat-icon inline="true">navigate_next</mat-icon>
             </button>
           </div>
         </div>
@@ -478,7 +499,7 @@
               type="button"
               class="stepperBackBtn"
             >
-              <mat-icon>navigate_before</mat-icon>Back
+              <mat-icon inline="true">navigate_before</mat-icon>Back
             </button>
             <button
               mat-raised-button
@@ -488,7 +509,7 @@
               class="stepperNextBtn"
               [disabled]="!formArray?.get([2]).valid"
             >
-              Next<mat-icon>navigate_next</mat-icon>
+              Next<mat-icon inline="true">navigate_next</mat-icon>
             </button>
           </div>
         </div>
@@ -596,7 +617,7 @@
               type="button"
               class="stepperBackBtn"
             >
-              <mat-icon>navigate_before</mat-icon>Back
+              <mat-icon inline="true">navigate_before</mat-icon>Back
             </button>
             <button
               mat-raised-button
@@ -606,7 +627,7 @@
               class="stepperNextBtn"
               [disabled]="!formArray?.get([3]).valid"
             >
-              Next<mat-icon>navigate_next</mat-icon>
+              Next<mat-icon inline="true">navigate_next</mat-icon>
             </button>
           </div>
         </div>
@@ -714,4 +735,4 @@
       </mat-step>
     </mat-stepper>
   </form>
-</div>
+</section>

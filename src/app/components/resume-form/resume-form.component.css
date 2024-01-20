@@ -1,3 +1,26 @@
+.subtitle-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 22px;
+}
+
+.subtitle-text,
+.download-preview-button {
+  margin: 10px;
+}
+
+@media (min-width: 600px) {
+  .subtitle-content {
+    flex-direction: row;
+  }
+
+  .subtitle-text {
+    margin-right: 10px;
+    padding-top: 13px;
+  }
+}
+
 mat-form-field {
   width: 100%;
 }
@@ -16,7 +39,9 @@ mat-form-field {
 .stepperBackBtn {
   margin-right: 5px;
 }
-
+.resume-form-section {
+  min-height: calc(100vh - 140px);
+}
 .page-title {
   margin-left: 30px;
   margin-top: 10px;

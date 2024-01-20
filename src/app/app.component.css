@@ -29,9 +29,9 @@
   right: 0;
 }
 
-.component-section {
+/* .component-section {
   height: 100vh;
-}
+} */
 
 .primary-color {
   color: var(--resume-builder-primary);

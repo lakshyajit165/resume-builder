@@ -36,3 +36,6 @@
 .primary-color {
   color: var(--resume-builder-primary);
 }
+.resume-builder-footer {
+  font-family: "Commissioner", sans-serif;
+}
